@@ -3,6 +3,30 @@ import "./App.scss";
 function App() {
   return (
     <div className="wrapper clear">
+      <div className="overlay">
+        <div className="drawer">
+          <h2 className="mb-30">Корзина</h2>
+          <div className="cartItem d-flex align-center mb-20">
+            <div className="cartItemImg" style={{ backgroundImage: 'url("/img/sneakers/1.jpg")' }} ></div>
+            {/* <img className="mr-20" width={70} height={70} src="/img/sneakers/1.jpg" alt="sheakers" /> */}
+            <div className="mr-20 flex">
+              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
+              <b>12 999 руб.</b>
+            </div>
+            <img className="removeBtn" src="/img/btn-remove.svg" alt="remove" />
+          </div>
+          <div className="cartItem d-flex align-center mb-20">
+            <div className="cartItemImg" style={{ backgroundImage: 'url("/img/sneakers/2.jpg")' }} ></div>
+            {/* <img className="mr-20" width={70} height={70} src="/img/sneakers/1.jpg" alt="sheakers" /> */}
+            <div className="mr-20 flex">
+              <p className="mb-5">Мужские Кроссовки Nike Blazer Mid Suede</p>
+              <b>8 499 руб.</b>
+            </div>
+            <img className="removeBtn" src="/img/btn-remove.svg" alt="remove" />
+          </div>
+        </div>
+      </div>
+
       <header className="d-flex justify-between align-center p-40">
         <div className="d-flex align-center">
           <img width={40} height={40} src="/img/logo.png" alt="Logo" />
@@ -59,9 +83,18 @@ function App() {
         </ul>
       </header>
       <div className="content p-40">
-        <h1 className="mb-40">Все кроссовки</h1>
+        <div className="d-flex align-center justify-between mb-40">
+          <h1>Все кроссовки</h1>
+          <div className="search-block d-flex">
+            <img src="/img/search.svg" alt="search" />
+            <input placeholder="Поиск...." />
+          </div>
+        </div>
         <div className="d-flex">
           <div className="card">
+            <div className="favorite">
+              <img src="/img/heart-unliked.svg" alt="unliked" />
+            </div>
             <img width={133} height={112} src="/img/sneakers/1.jpg" alt="sneakers" />
             <h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
             <div className="d-flex justify-between align-center">
