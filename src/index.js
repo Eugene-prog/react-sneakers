@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import API_URL from "./config.json";
 
 import "./index.scss";
 import "macro-css";

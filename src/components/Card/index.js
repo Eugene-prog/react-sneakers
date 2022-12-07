@@ -1,28 +1,33 @@
 import styles from "./Card.module.scss";
 import React from "react";
 
-function Card(props) {
+function Card({ title, imageUrl, price, onFavorite, onPlus }) {
   const [isAdded, setIsAdded] = React.useState(false);
+  const [isFavorite, setIsFavorite] = React.useState(false);
 
   const onClickPlus = () => {
+    onPlus({ title, imageUrl, price });
     setIsAdded(!isAdded);
   };
 
-  React.useEffect(() => {
-    console.log("Переменная изменилась");
-  }, [isAdded]);
+  React.useEffect(() => {}, [isAdded]);
+
+  const onClickFavorite = () => {
+    onFavorite({ title, imageUrl, price });
+    setIsFavorite(!isFavorite);
+  };
 
   return (
     <div className={styles.card}>
-      <div className={styles.favorite}>
-        <img src="/img/heart-unliked.svg" alt="unliked" />
+      <div className={styles.favorite} onClick={onClickFavorite}>
+        <img src={isFavorite ? "/img/liked.svg" : "/img/unliked.svg"} alt="unliked" />
       </div>
-      <img width={133} height={112} src={props.imageUrl} alt="sneakers" />
-      <h5>{props.title}</h5>
+      <img width={133} height={112} src={imageUrl} alt="sneakers" />
+      <h5>{title}</h5>
       <div className="d-flex justify-between align-center">
         <div className="d-flex flex-column">
           <span>Цена: </span>
-          <strong>{props.price} руб. </strong>
+          <strong>{price} руб. </strong>
         </div>
         <img
           className={styles.plus}
