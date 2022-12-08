@@ -1,10 +1,12 @@
 import "./App.scss";
 import React from "react";
 import axios from "axios";
-import Card from "./components/Card";
+import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
-import API_URL from "./config.json";
+
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   const [items, setItems] = React.useState([]);
@@ -14,11 +16,14 @@ function App() {
   const [favorites, setFavorites] = React.useState([]);
 
   React.useEffect(() => {
-    axios.get(`${API_URL}/items`).then((res) => {
+    axios.get("https://6384cd373fa7acb14f010a00.mockapi.io/items").then((res) => {
       setItems(res.data);
     });
     axios.get("https://6384cd373fa7acb14f010a00.mockapi.io/cart").then((res) => {
       setCartItems(res.data);
+    });
+    axios.get("https://6384cd373fa7acb14f010a00.mockapi.io/favorites").then((res) => {
+      setFavorites(res.data);
     });
   }, []);
 
@@ -46,41 +51,27 @@ function App() {
   return (
     <div className="wrapper clear">
       {cartOpened && <Drawer onClose={() => setCartOpened(false)} onRemove={onRemoveFromCart} items={cartItems} />}
+
       <Header onClickCart={() => setCartOpened(true)} />
-      <div className="content p-40">
-        <div className="d-flex align-center justify-between mb-40">
-          <h1>{searchValue ? `Поиск по запросу: "${searchValue}"` : `Все кроссовки`}</h1>
-          <div className="search-block d-flex">
-            <img src="/img/search.svg" alt="search" />
-            {searchValue && (
-              <img
-                onClick={() => {
-                  setSearchValue("");
-                }}
-                className="clear cu-p"
-                src="/img/btn-remove.svg"
-                alt="close"
-              />
-            )}
-            <input onChange={onChangeSearchInput} value={searchValue} placeholder="Поиск...." />
-          </div>
-        </div>
-        <div className="d-flex flex-wrap">
-          {items
-            .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-            .map((item, index) => (
-              <Card
-                key={index}
-                id={item.id}
-                title={item.title}
-                price={item.price}
-                imageUrl={item.imageUrl}
-                onFavorite={(obj) => onAddToFavorite(obj)}
-                onPlus={(obj) => onAddToCart(obj)}
-              />
-            ))}
-        </div>
-      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home
+              items={items}
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              onChangeSearchInput={onChangeSearchInput}
+              onAddToFavorite={onAddToFavorite}
+              onAddToCart={onAddToCart}
+            />
+          }
+        ></Route>
+        <Route
+          path="/favorites"
+          element={<Favorites items={favorites} onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart} />}
+        ></Route>
+      </Routes>
     </div>
   );
 }
